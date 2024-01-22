@@ -56,12 +56,7 @@ df.fillna("None", inplace=True)
 # Add a header to the filter section
 st.header(f"Data Filter in {subdir_selectbox}")
 
-final_dfs, code = spreadsheet(*dfs)
-
-st.write(final_dfs)
-
-# Display the code that corresponds to the script
-st.code(code)
+spreadsheet(*dfs)
 
 
 # Define a function to update the URL with the selected subdirectory
