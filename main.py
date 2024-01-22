@@ -40,23 +40,17 @@ dfs = []
 for dir in subdirs:
     path = os.path.join(bbot_path, dir)
     csv_path = os.path.join(path, "asset-inventory.csv")
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, index_col=None)
+    df.index += 1
+    df.fillna("None", inplace=True)
     dfs.append(df)
 
-# Load the input.csv file into a pandas DataFrame
-df = pd.read_csv(input_csv_path)
-
-data_dict = df.to_dict()
-
-
-df.index += 1
-
-df.fillna("None", inplace=True)
 
 # Add a header to the filter section
-st.header(f"Data Filter in {subdir_selectbox}")
+st.header(f"Data Frame Of ({subdir_selectbox})")
 
-spreadsheet(*dfs)
+# Spreadsheet the data frames
+spreadsheet(*dfs, df_names=subdirs)
 
 
 # Define a function to update the URL with the selected subdirectory
