@@ -50,7 +50,11 @@ for dir in subdirs:
 st.header(f"Data Frame Of ({subdir_selectbox})")
 
 # Spreadsheet the data frames
-spreadsheet(*dfs, df_names=subdirs)
+new_dfs, code = spreadsheet(*dfs, df_names=subdirs)
+
+st.write(new_dfs)
+
+st.code(code)
 
 
 # Define a function to update the URL with the selected subdirectory
