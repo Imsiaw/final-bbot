@@ -28,6 +28,15 @@ st.set_page_config(
 sidebar = st.sidebar
 
 
+def create_dir_if_not_exist(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+
+create_dir_if_not_exist(bbot_path)
+create_dir_if_not_exist(diff_path)
+
+
 def button_callback(path):
     st.session_state["active_directory"] = path
 

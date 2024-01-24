@@ -33,6 +33,10 @@ def create_dir_if_not_exist(path):
         os.makedirs(path)
 
 
+create_dir_if_not_exist(bbot_path)
+create_dir_if_not_exist(diff_path)
+
+
 def diff(obj1, obj2):
     # print(obj1, obj2)
     diff_list = []
