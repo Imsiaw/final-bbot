@@ -4,6 +4,7 @@ import os
 from mitosheet.streamlit.v1 import spreadsheet
 import streamlit_extras as ste
 import uuid
+from datetime import datetime
 
 # ------------------------------------------------------------
 
@@ -79,7 +80,13 @@ for dir in bbot_directories:
 
 for dir in bbot_files:
     with sidebar.expander(dir["label"]):
-        for file in dir["children"]:
+        date_list = dir["children"]
+        date_list = sorted(
+            date_list,
+            key=lambda x: datetime.strptime(x, "%Y_%m_%d_%H%M%S"),
+            reverse=True,
+        )
+        for file in date_list[:3]:
             path = f"{bbot_path}/{dir['label']}/{file}/asset-inventory.csv"
             st.button(
                 file,
