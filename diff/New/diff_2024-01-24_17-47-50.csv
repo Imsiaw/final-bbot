@@ -1,0 +1,24 @@
+Host,Provider,IP (External),IP (Internal),Open Ports,HTTP Status,HTTP Title,Risk Rating,Findings,Technologies,WAF,DNS Records
+dev.coinwatcher.ai,,94.237.100.209,,"80, 443",200,Unique Cryptocurrencies Historical Data | CoinWatcher,,,"wp rocket
+bootstrap
+bootstrap table
+jquery migrate
+wordpress
+underscore.js
+woocommerce
+mysql
+php
+nginx
+yoast seo
+jquery => wp rocket
+bootstrap table
+bootstrap
+jquery migrate
+wordpress
+underscore.js
+woocommerce
+mysql
+php
+nginx
+yoast seo
+jquery",,"A:94.237.100.209, CNAME:coinwatcher.ai, MX:mx.zoho.com, MX:mx2.zoho.com, MX:mx3.zoho.com, NS:bob.ns.cloudflare.com, NS:brit.ns.cloudflare.com, SOA:bob.ns.cloudflare.com, TXT:zb09192067.zmverify.zoho.com, TXT:zoho.com"

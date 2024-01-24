@@ -1,0 +1,33 @@
+Host,Provider,IP (External),IP (Internal),Open Ports,HTTP Status,HTTP Title,Risk Rating,Findings,Technologies,WAF,DNS Records
+coinwatcher.ai,None,94.237.100.209,None,"80, 443",200,Unique Cryptocurrencies Historical Data | CoinWatcher,None,coinwatcher.ai:Shodan reported verified vulnerabilities: CVE-2023-44487,"bootstrap
+bootstrap table
+wordpress
+jquery migrate
+cpe:/a:postfix:postfix
+mysql
+cpe:/a:openbsd:openssh
+php
+cpe:/a:php:php
+nginx
+yoast seo
+cpe:/a:wordpress:wordpress
+jquery
+cpe:/a:f5:nginx:1.21.6
+cpe:/a:mysql:mysql
+cpe:/a:jquery:jquery",None,"A:94.237.100.209, MX:mx.zoho.com, MX:mx2.zoho.com, MX:mx3.zoho.com, NS:bob.ns.cloudflare.com, NS:brit.ns.cloudflare.com, SOA:bob.ns.cloudflare.com, TXT:zb09192067.zmverify.zoho.com, TXT:zoho.com"
+dev.coinwatcher.ai,None,94.237.100.209,None,"80, 443",200,Unique Cryptocurrencies Historical Data | CoinWatcher,None,None,"wp rocket
+bootstrap
+bootstrap table
+jquery migrate
+wordpress
+underscore.js
+woocommerce
+mysql
+php
+nginx
+yoast seo
+jquery",None,"A:94.237.100.209, CNAME:coinwatcher.ai, MX:mx.zoho.com, MX:mx2.zoho.com, MX:mx3.zoho.com, NS:bob.ns.cloudflare.com, NS:brit.ns.cloudflare.com, SOA:bob.ns.cloudflare.com, TXT:zb09192067.zmverify.zoho.com, TXT:zoho.com"
+eewpnurpixkd.coinwatcher.ai,None,94.237.100.209,None,"80, 443",200,Login - Adminer,None,None,"php
+adminer
+nginx",None,A:94.237.100.209
+www.coinwatcher.ai,None,94.237.100.209,None,"80, 443",301 -> https://www.coinwatcher.ai/,None,None,None,nginx,None,A:94.237.100.209
