@@ -10,6 +10,9 @@ from datetime import datetime
 
 os.system("clear")
 
+query_path = st.query_params.get("path")
+
+
 bbot_path = "bbot"
 
 diff_path = "diff"
@@ -17,7 +20,11 @@ diff_path = "diff"
 if "active_directory" not in st.session_state:
     st.session_state["active_directory"] = None
 
-active_directory = None
+
+if query_path != None or query_path.strip() != "":
+    st.session_state["active_directory"] = query_path
+
+print(st.session_state["active_directory"])
 
 st.set_page_config(
     page_title="BBot CSV Explorer",
@@ -40,6 +47,7 @@ create_dir_if_not_exist(diff_path)
 
 def button_callback(path):
     st.session_state["active_directory"] = path
+    st.query_params["path"] = path
 
 
 # ------------------------------------------------------------
@@ -107,7 +115,6 @@ diff_directories = [
 if len(diff_directories) != 0:
     sidebar.header("Diff's")
 
-print(diff_directories)
 
 diff_files = []
 
@@ -116,14 +123,11 @@ for dir in diff_directories:
     sub_dirs = [d for d in os.listdir(path) if d.endswith(".csv")]
     diff_files.append({"label": dir, "children": sub_dirs})
 
-print(diff_files)
-
 
 with sidebar.expander("Diff"):
     for dir in diff_files:
         with sidebar.expander(dir["label"]):
             for file in dir["children"]:
-                print(file)
                 path = f"{diff_path}/{dir['label']}/{file}"
                 st.button(
                     file,
