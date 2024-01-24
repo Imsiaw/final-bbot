@@ -46,8 +46,21 @@ def diff(obj1, obj2):
         for item2 in obj2:
             if item1 == item2:
                 diff_obj[item1] = obj1[item1]
+                if item1 == "Technologies":
+                    ob1 = obj1[item1].replace("\n", " ").split(" ")
+                    ob2 = obj2[item1].replace("\n", " ").split(" ")
+                    ob1.sort()
+                    ob2.sort()
+                    ob1 = " ".join(ob1)
+                    ob2 = " ".join(ob2)
 
-                if obj1[item1] != obj2[item1]:
+                    if ob1 != ob2:
+                        is_diff = True
+                        diff_obj[item1] = f"{obj1[item1]} => {obj2[item1]}"
+                        print(
+                            f"found diff! {item1} old {obj1[item1]}  new {obj2[item1]}"
+                        )
+                elif obj1[item1] != obj2[item1] and item1 != "":
                     is_diff = True
                     diff_obj[item1] = f"{obj1[item1]} => {obj2[item1]}"
                     print(f"found diff! {item1} old {obj1[item1]}  new {obj2[item1]}")
@@ -58,6 +71,8 @@ def diff(obj1, obj2):
 
 for dir in files:
     date_list = dir["children"]
+    if len(date_list) < 2:
+        break
     date_list = sorted(
         date_list, key=lambda x: datetime.strptime(x, "%Y_%m_%d_%H%M%S"), reverse=True
     )
