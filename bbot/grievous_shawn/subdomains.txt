@@ -1,9 +1,0 @@
-trickest.io
-docs.trickest.io
-stage.trickest.io
-hive-api.trickest.io
-staging.trickest.io
-touch.trickest.io
-api.trickest.io
-api.staging.trickest.io
-touch.staging.trickest.io

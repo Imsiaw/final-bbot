@@ -1,19 +1,23 @@
 import pandas as pd
 import streamlit as st
-from streamlit_extras.dataframe_explorer import dataframe_explorer
 import os
 from mitosheet.streamlit.v1 import spreadsheet
+import streamlit_extras as ste
+import uuid
 
-# Get the current working directory
+# ------------------------------------------------------------
+
+os.system("clear")
+
 bbot_path = "bbot"
 
-# Get a list of all the subdirectories in the current working directory
-subdirs = [
-    d
-    for d in os.listdir(bbot_path)
-    if os.path.isdir(os.path.join(bbot_path, d))
-    and "asset-inventory.csv" in os.listdir(os.path.join(bbot_path, d))
-]
+diff_path = "diff"
+
+if "active_directory" not in st.session_state:
+    st.session_state["active_directory"] = None
+
+active_directory = None
+
 st.set_page_config(
     page_title="BBot CSV Explorer",
     layout="wide",
@@ -21,47 +25,94 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Create a sidebar
 sidebar = st.sidebar
 
-# Add a selectbox to the sidebar to allow the user to select a subdirectory
-subdir_selectbox = sidebar.selectbox("Select a Subdirectory", subdirs)
 
-# Get the path to the selected subdirectory
-subdir_path = os.path.join(bbot_path, subdir_selectbox)
+def button_callback(path):
+    st.session_state["active_directory"] = path
 
 
-# Get the path to the input.csv file in the selected subdirectory
-input_csv_path = os.path.join(subdir_path, "asset-inventory.csv")
+# ------------------------------------------------------------
 
 
-dfs = []
-
-for dir in subdirs:
-    path = os.path.join(bbot_path, dir)
-    csv_path = os.path.join(path, "asset-inventory.csv")
+if st.session_state["active_directory"] != None:
+    base_path = st.session_state["active_directory"]
+    st.header(base_path)
+    csv_path = base_path
     df = pd.read_csv(csv_path, index_col=None)
-    df.index += 1
-    df.fillna("None", inplace=True)
-    dfs.append(df)
+    new_dfs, code = spreadsheet(df, df_names=[os.path.basename(base_path)])
+    st.write(new_dfs, unsafe_allow_html=True)
+    st.code(code)
 
 
-# Add a header to the filter section
-st.header(f"Data Frame Of ({subdir_selectbox})")
-
-# Spreadsheet the data frames
-new_dfs, code = spreadsheet(*dfs, df_names=subdirs)
-
-st.write(new_dfs)
-
-st.code(code)
+# ------------------------------------------------------------
 
 
-# Define a function to update the URL with the selected subdirectory
-def update_url():
-    url = st.query_params
-    url["subdir"] = subdir_selectbox
+bbot_directories = [
+    d for d in os.listdir(bbot_path) if os.path.isdir(os.path.join(bbot_path, d))
+]
+
+if len(bbot_directories) != 0:
+    sidebar.header("Project's")
+
+bbot_files = []
+
+for dir in bbot_directories:
+    path = f"{bbot_path}/{dir}"
+    sub_dirs = [
+        d
+        for d in os.listdir(path)
+        if os.path.isdir(os.path.join(path, d))
+        and "asset-inventory.csv" in os.listdir(f"{path}/{d}")
+    ]
+    bbot_files.append({"label": dir, "children": sub_dirs})
 
 
-# Call the update_url function after selecting a subdirectory
-update_url()
+for dir in bbot_files:
+    with sidebar.expander(dir["label"]):
+        for file in dir["children"]:
+            path = f"{bbot_path}/{dir['label']}/{file}/asset-inventory.csv"
+            st.button(
+                file,
+                key=uuid.uuid4(),
+                use_container_width=True,
+                on_click=button_callback,
+                args=(path,),
+            )
+
+# ------------------------------------------------------------
+sidebar.divider()
+
+diff_directories = [
+    d for d in os.listdir(diff_path) if os.path.isdir(os.path.join(diff_path, d))
+]
+
+
+if len(diff_directories) != 0:
+    sidebar.header("Diff's")
+
+print(diff_directories)
+
+diff_files = []
+
+for dir in diff_directories:
+    path = f"{diff_path}/{dir}"
+    sub_dirs = [d for d in os.listdir(path) if d.endswith(".csv")]
+    diff_files.append({"label": dir, "children": sub_dirs})
+
+print(diff_files)
+
+
+with sidebar.expander("Diff"):
+    for dir in diff_files:
+        with sidebar.expander(dir["label"]):
+            for file in dir["children"]:
+                print(file)
+                path = f"{diff_path}/{dir['label']}/{file}"
+                st.button(
+                    file,
+                    key=uuid.uuid4(),
+                    use_container_width=True,
+                    on_click=button_callback,
+                    args=(path,),
+                )
