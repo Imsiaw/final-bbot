@@ -21,8 +21,12 @@ if "active_directory" not in st.session_state:
     st.session_state["active_directory"] = None
 
 
-if query_path != None or query_path.strip() != "":
-    st.session_state["active_directory"] = query_path
+try:
+    if query_path != None or query_path.strip() != "":
+        st.session_state["active_directory"] = query_path
+except:
+    pass
+
 
 print(st.session_state["active_directory"])
 
